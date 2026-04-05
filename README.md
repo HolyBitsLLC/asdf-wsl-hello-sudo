@@ -28,6 +28,24 @@ This invokes the upstream `install.sh` which:
 4. Creates a `pam-configs` entry for automatic PAM configuration
 5. Generates an `uninstall.sh` you can run later
 
+## Windows-side component path
+
+The installer places its Windows Hello bridge executable on the Windows filesystem.
+By default, the path is:
+
+```
+C:\Users\<you>\AppData\Local\Programs\wsl-hello-sudo
+```
+
+From WSL this is accessible at:
+
+```
+/mnt/c/Users/<you>/AppData/Local/Programs/wsl-hello-sudo
+```
+
+The PAM module configuration in `/etc/pam_wsl_hello/config` references this
+path so it can invoke the Windows Hello prompt from within WSL.
+
 ## Plugin scripts
 
 - `bin/list-all` — Lists available versions from GitHub releases.
