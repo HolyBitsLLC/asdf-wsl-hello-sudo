@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+VERSION="${ASDF_INSTALL_VERSION}"
+INSTALL_PATH="${ASDF_INSTALL_PATH}"
+DOWNLOAD_PATH="${ASDF_DOWNLOAD_PATH}"
+
+mkdir -p "$INSTALL_PATH/bin"
+mkdir -p "$INSTALL_PATH/release"
+
+# The tarball extracts a "release/" directory; copy its contents
+if [[ -d "$DOWNLOAD_PATH/release" ]]; then
+  cp -a "$DOWNLOAD_PATH/release/." "$INSTALL_PATH/release/"
+else
+  # Fallback: copy everything from download path
+  cp -a "$DOWNLOAD_PATH/." "$INSTALL_PATH/release/"
+fi
+
+chmod +x "$INSTALL_PATH/release/install.sh"
+
+# Create a wrapper that runs the upstream interactive installer
+cat > "$INSTALL_PATH/bin/wsl-hello-sudo-install" <<LAUNCHER
+#!/usr/bin/env bash
+set -euo pipefail
+cd "$INSTALL_PATH/release"
+exec ./install.sh "\$@"
+LAUNCHER
+chmod +x "$INSTALL_PATH/bin/wsl-hello-sudo-install"
+
+echo "wsl-hello-sudo ${VERSION} installed to ${INSTALL_PATH}"
+echo "Run 'wsl-hello-sudo-install' to configure the PAM module."

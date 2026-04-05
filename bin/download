@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+VERSION="${ASDF_INSTALL_VERSION}"
+DOWNLOAD_PATH="${ASDF_DOWNLOAD_PATH}"
+
+URL="https://github.com/nullpo-head/WSL-Hello-sudo/releases/download/v${VERSION}/release.tar.gz"
+
+mkdir -p "$DOWNLOAD_PATH"
+
+echo "Downloading WSL-Hello-sudo v${VERSION}..."
+curl -fL "$URL" -o "$DOWNLOAD_PATH/release.tar.gz"
+
+tar xzf "$DOWNLOAD_PATH/release.tar.gz" -C "$DOWNLOAD_PATH"
+rm -f "$DOWNLOAD_PATH/release.tar.gz"

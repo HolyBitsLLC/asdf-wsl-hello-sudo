@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+curl -fsSL "https://api.github.com/repos/nullpo-head/WSL-Hello-sudo/releases?per_page=100" \
+  | grep -oP '"tag_name":\s*"v\K[0-9]+\.[0-9]+\.[0-9]+' \
+  | sort -V \
+  | tr '\n' ' '
+echo

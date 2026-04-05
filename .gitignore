@@ -1,0 +1,9 @@
+# macOS
+.DS_Store
+
+# asdf downloads/builds
+downloads/
+
+# shell artifacts
+*.swp
+*.tmp
